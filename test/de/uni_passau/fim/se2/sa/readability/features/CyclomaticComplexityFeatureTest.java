@@ -16,7 +16,7 @@ public class CyclomaticComplexityFeatureTest {
     void testSimpleFile() throws IOException {
         String filePath = "resources/Simple.jsnp";
         String code = Files.readString(Paths.get(filePath));
-        assertEquals(4.0, complexityFeature.computeMetric(code), "Empty method should have complexity 1");
+        assertEquals(4.0, complexityFeature.computeMetric(code));
     }
 
     @Test
