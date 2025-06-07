@@ -23,6 +23,9 @@ public class HalsteadVolumeFeature extends FeatureMetric {
         } catch (ParseException e) {
             return 0.0;
         }
+        if (codeSnippet == null) {
+            return 0.0;
+        }
         // Count operators
         OperatorVisitor operatorVisitor = new OperatorVisitor();
         parsedCodeSnippet.accept(operatorVisitor, null);
@@ -60,6 +63,7 @@ public class HalsteadVolumeFeature extends FeatureMetric {
 
 
         double volume = programLength * (Math.log(vocabulary) / Math.log(2));
+        System.out.println("Calculated volume: " + volume);
 
         return volume;
 

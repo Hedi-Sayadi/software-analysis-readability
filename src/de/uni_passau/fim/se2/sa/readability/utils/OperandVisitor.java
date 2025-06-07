@@ -1,8 +1,10 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
+import com.github.javaparser.ast.stmt.CatchClause;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -122,6 +124,12 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
     @Override
     public void visit(FieldAccessExpr n, Void arg) {
         System.out.println(n.getNameAsString());
+        increment(n.getNameAsString());
+        super.visit(n, arg);
+    }
+    
+    @Override
+    public void visit(Parameter n, Void arg) {
         increment(n.getNameAsString());
         super.visit(n, arg);
     }

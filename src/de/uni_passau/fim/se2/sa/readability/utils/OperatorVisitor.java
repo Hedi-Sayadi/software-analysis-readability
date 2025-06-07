@@ -29,7 +29,13 @@ public class OperatorVisitor extends VoidVisitorAdapter<Void> {
     }
 
     public Map<OperatorType, Integer> getOperatorsPerMethod() {
-        return operatorsPerMethod;
+        Map<OperatorType, Integer> result = new HashMap<>();
+        for (Map.Entry<OperatorType, Integer> entry : operatorsPerMethod.entrySet()) {
+            if (entry.getValue() > 0) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return result;
     }
     @Override
     public void visit(AssignExpr n, Void arg) {
