@@ -16,12 +16,13 @@ public class HalsteadVolumeFeatureTest {
         halsteadFeature = new HalsteadVolumeFeature();
     }
 
+
     @Test
-    void testSimpleFile() throws IOException {
-        String filePath = "resources/Simple.jsnp";
+    void testSimpleFile1() throws IOException {
+        String filePath = "resources/snippets/23.jsnp";
         String code = Files.readString(Paths.get(filePath));
-        assertTrue(halsteadFeature.computeMetric(code)>0);
-    }   
+        assertEquals(503,halsteadFeature.computeMetric(code));
+    }
 
     @Test
     void testEmptyCode() {

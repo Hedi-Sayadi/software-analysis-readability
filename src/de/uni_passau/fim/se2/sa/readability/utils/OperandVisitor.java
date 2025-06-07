@@ -143,10 +143,9 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
     }
 
     @Override
-    public void visit(MarkerAnnotationExpr n, Void arg) {
+    public void visit(NormalAnnotationExpr  n, Void arg) {
         increment(n.getNameAsString());
         super.visit(n, arg);
     }
-
 
 }
