@@ -1,10 +1,14 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.functions.Logistic;
 import weka.core.Instances;
+import weka.core.converters.CSVLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class Classify {
 
@@ -16,8 +20,14 @@ public class Classify {
      * @throws IOException if the CSV file specified via the cli could not be loaded.
      */
     public static Instances loadDataset(File data) throws IOException {
-        throw new UnsupportedOperationException("Implement me");
-    }
+        //Help of llm : Please refer to .keep in LLM folder
+        CSVLoader loader = new CSVLoader();
+        loader.setSource(data);
+        Instances dataset = loader.getDataSet();
+
+        // The class attribute is the last one (Truth)
+        dataset.setClassIndex(dataset.numAttributes() - 1);
+        return dataset;    }
 
     /**
      * Trains and evaluates the "logistic" classifier on the given dataset.
@@ -28,6 +38,13 @@ public class Classify {
      * @throws Exception if the classifier could not be generated successfully.
      */
     public static Evaluation trainAndEvaluate(Instances dataset) throws Exception {
-        throw new UnsupportedOperationException("Implement me");
+        Classifier logistic = new Logistic();
+        Evaluation eval = new Evaluation(dataset);
+
+         //Help of llm : Please refer to .keep in LLM folder
+        // Perform 10-fold cross-validation with seed = 1
+        eval.crossValidateModel(logistic, dataset, 10, new Random(1));
+
+        return eval;
     }
 }

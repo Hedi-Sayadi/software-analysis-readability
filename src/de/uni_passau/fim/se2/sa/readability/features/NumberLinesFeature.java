@@ -10,8 +10,11 @@ public class NumberLinesFeature extends FeatureMetric {
      */
     @Override
     public double computeMetric(String codeSnippet) {
-        throw new UnsupportedOperationException("Implement me");
-    }
+        if (codeSnippet.length()==0 || codeSnippet == null ){
+            return 0;
+        }
+        return codeSnippet.split("\r\n|\r|\n").length;
+            }
 
     @Override
     public String getIdentifier() {

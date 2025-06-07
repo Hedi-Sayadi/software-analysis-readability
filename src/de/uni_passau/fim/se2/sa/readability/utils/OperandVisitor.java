@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashMap;
@@ -18,5 +19,61 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
 
     public Map<String, Integer> getOperandsPerMethod() {
         return operandsPerMethod;
+    }
+
+    private void increment(String operand) {
+        if (operandsPerMethod.containsKey(operand)) {
+            operandsPerMethod.put(operand, operandsPerMethod.get(operand) + 1);
+        } else {
+            operandsPerMethod.put(operand, 1);
+        }
+    }
+
+    @Override
+    public void visit(NameExpr n, Void arg) {
+        increment(n.getNameAsString());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(BooleanLiteralExpr n, Void arg) {
+        increment(String.valueOf(n.getValue()));
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(CharLiteralExpr n, Void arg) {
+        increment(n.getValue());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(DoubleLiteralExpr n, Void arg) {
+        increment(n.getValue());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(IntegerLiteralExpr n, Void arg) {
+        increment(n.getValue());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(LongLiteralExpr n, Void arg) {
+        increment(n.getValue());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(StringLiteralExpr n, Void arg) {
+        increment(n.getValue());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(NullLiteralExpr n, Void arg) {
+        increment("null");
+        super.visit(n, arg);
     }
 }

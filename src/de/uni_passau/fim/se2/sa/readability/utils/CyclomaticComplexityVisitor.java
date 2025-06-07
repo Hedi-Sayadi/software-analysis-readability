@@ -1,13 +1,76 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.ConditionalExpr;
+import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class CyclomaticComplexityVisitor extends VoidVisitorAdapter<Void> {
-
-    private int complexity;
+    //Help of llm : Please refer to .keep in LLM folder
+    private int complexity= 1;
 
     public int getComplexity() {
         return complexity;
+    }
+
+    @Override
+    public void visit(IfStmt n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(ForStmt n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(ForEachStmt n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(WhileStmt n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(DoStmt n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(CatchClause n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(SwitchEntry n, Void arg) {
+        // Count each non-default case (has a label)
+        if (!n.getLabels().isEmpty()) {
+            complexity++;
+        }
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(ConditionalExpr n, Void arg) {
+        complexity++;
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(BinaryExpr n, Void arg) {
+        // Short-circuit logic counts as additional paths
+        if (n.getOperator() == BinaryExpr.Operator.AND || n.getOperator() == BinaryExpr.Operator.OR) {
+            complexity++;
+        }
+        super.visit(n, arg);
     }
 
 }
