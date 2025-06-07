@@ -5,6 +5,7 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.CatchClause;
+import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -127,11 +128,18 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
         increment(n.getNameAsString());
         super.visit(n, arg);
     }
-    
+
     @Override
     public void visit(Parameter n, Void arg) {
         increment(n.getNameAsString());
         super.visit(n, arg);
     }
+
+    @Override
+    public void visit(ExplicitConstructorInvocationStmt n, Void arg) {
+        increment("this");
+        super.visit(n, arg);
+    }
+
 
 }
