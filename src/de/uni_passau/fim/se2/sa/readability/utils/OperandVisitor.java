@@ -129,6 +129,7 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
         super.visit(n, arg);
     }
 
+//@ annotation
     @Override
     public void visit(Parameter n, Void arg) {
         increment(n.getNameAsString());
@@ -138,6 +139,12 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
     @Override
     public void visit(ExplicitConstructorInvocationStmt n, Void arg) {
         increment("this");
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(MarkerAnnotationExpr n, Void arg) {
+        increment(n.getNameAsString());
         super.visit(n, arg);
     }
 

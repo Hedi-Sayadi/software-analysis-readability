@@ -21,7 +21,7 @@ public class HalsteadVolumeFeatureTest {
         String filePath = "resources/Simple.jsnp";
         String code = Files.readString(Paths.get(filePath));
         assertTrue(halsteadFeature.computeMetric(code)>0);
-    }
+    }   
 
     @Test
     void testEmptyCode() {
