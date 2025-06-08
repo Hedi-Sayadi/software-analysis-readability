@@ -56,7 +56,7 @@ public class Preprocess {
      * @return a map from filename (e.g., "1.jsnp") to mean rater score
      * @throws IOException if the file cannot be read
      */
-    private static Map<String, Double> parseTruthFile(File truthFile) throws IOException {
+    public static Map<String, Double> parseTruthFile(File truthFile) throws IOException {
         Map<String, Double> truthScores = new HashMap<>();
 
         BufferedReader br = new BufferedReader(new FileReader(truthFile));
@@ -82,7 +82,7 @@ public class Preprocess {
         return truthScores;
     }
 
-    private static List<Path> getSortedSnippetFiles(Path sourceDir) throws IOException {
+    public static List<Path> getSortedSnippetFiles(Path sourceDir) throws IOException {
         List<Path> snippetFiles = new ArrayList<>();
         //help of llm
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceDir, "*.jsnp")) {
@@ -125,7 +125,7 @@ public class Preprocess {
     }
 
 
-    private static void MapSnippetToMeanScores(String[] meanValues,List<String> snippetNames,Map<String, Double> truthScores) {
+    public static void MapSnippetToMeanScores(String[] meanValues,List<String> snippetNames,Map<String, Double> truthScores) {
         for (int i = 1; i < meanValues.length && i <= snippetNames.size(); i++) {
             String snippetName = snippetNames.get(i - 1);
             //help of llm
@@ -147,6 +147,7 @@ public class Preprocess {
         }
         return snippetNames;
     }
+
 
 
 }
