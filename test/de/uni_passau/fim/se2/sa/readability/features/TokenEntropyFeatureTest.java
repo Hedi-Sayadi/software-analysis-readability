@@ -32,4 +32,9 @@ public class TokenEntropyFeatureTest {
         assertEquals(0.0, result, "Invalid code should result in 0 entropy");
     }
 
+    @Test
+    void testGetIdentifier() {
+        assertEquals("TokenEntropy", entropyFeature.getIdentifier());
+    }
+
 }

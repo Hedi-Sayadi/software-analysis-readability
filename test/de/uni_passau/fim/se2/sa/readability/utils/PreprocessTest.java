@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import de.uni_passau.fim.se2.sa.readability.features.FeatureMetric;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -7,11 +8,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PreprocessTest {
 
@@ -46,7 +52,7 @@ class PreprocessTest {
 
     @Test
     public void testGetSortedSnippetFiles() throws IOException {
-        Path tempDir = Files.createTempDirectory("Snippets-test");
+        Path tempDir = Files.createTempDirectory("Snippets");
         Files.createFile(tempDir.resolve("3.jsnp"));
         Files.createFile(tempDir.resolve("1.jsnp"));
         Files.createFile(tempDir.resolve("2.jsnp"));
@@ -74,6 +80,66 @@ class PreprocessTest {
         assertEquals(1.0, truthScores.get("3.jsnp"));
     }
 
+    @Test
+    void buildCSVRowReturnsCorrectFormatWithNo() throws IOException {
+        Path tempDir = Files.createTempDirectory("testDir");
+        tempDir.toFile().deleteOnExit();
 
+        Path testFile = tempDir.resolve("test.jsnp");
+        Files.writeString(testFile, "public class Test {}");
+
+        FeatureMetric line = mock(FeatureMetric.class);
+        FeatureMetric entropy = mock(FeatureMetric.class);
+        FeatureMetric volume = mock(FeatureMetric.class);
+
+        when(line.computeMetric(anyString())).thenReturn(15.00);
+        when(entropy.computeMetric(anyString())).thenReturn(2.34);
+        when(volume.computeMetric(anyString())).thenReturn(100.59);
+
+        List<FeatureMetric> metrics = List.of(line, entropy,volume);
+
+        Map<String, Double> truthScores = Map.of("test.jsnp", 0.6);
+
+        String result = Preprocess.buildCSVRow(testFile, truthScores, metrics);
+
+        String expected = "test.jsnp,15.00,2.34,100.59,N"+ System.lineSeparator();
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void buildCSVRowReturnsCorrectFormatWithYes() throws IOException {
+        Path tempDir = Files.createTempDirectory("testDir");
+        tempDir.toFile().deleteOnExit();
+
+        Path testFile = tempDir.resolve("test.jsnp");
+        Files.writeString(testFile, "public class Test {}");
+
+        FeatureMetric line = mock(FeatureMetric.class);
+        FeatureMetric entropy = mock(FeatureMetric.class);
+        FeatureMetric volume = mock(FeatureMetric.class);
+
+        when(line.computeMetric(anyString())).thenReturn(15.00);
+        when(entropy.computeMetric(anyString())).thenReturn(2.34);
+        when(volume.computeMetric(anyString())).thenReturn(100.59);
+
+        List<FeatureMetric> metrics = List.of(line, entropy,volume);
+
+        Map<String, Double> truthScores = Map.of("test.jsnp", 3.7);
+
+        String result = Preprocess.buildCSVRow(testFile, truthScores, metrics);
+
+        String expected = "test.jsnp,15.00,2.34,100.59,Y"+ System.lineSeparator();
+        assertEquals(expected, result);
+    }
+
+
+
+
+    @Test
+    void buildCSVRowThrowsIOException() {
+        Path nonExistentFile = Paths.get("nonexistent.csv");
+        assertThrows(IOException.class, () ->
+                Preprocess.buildCSVRow(nonExistentFile, Map.of(), List.of()));
+    }
 
 }

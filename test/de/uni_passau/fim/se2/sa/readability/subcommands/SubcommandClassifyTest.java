@@ -1,10 +1,12 @@
 package de.uni_passau.fim.se2.sa.readability.subcommands;
 
-import de.uni_passau.fim.se2.sa.readability.ReadabilityAnalysisMain;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SubcommandClassifyTest {
 //    @Test
@@ -13,4 +15,28 @@ class SubcommandClassifyTest {
 //        CommandLine.ParseResult result = cmd.parseArgs("classify","-d","resources/dataset.csv");
 //        assertEquals("classify", result.subcommand().commandSpec().name());
 //    }
+
+    @Test
+    void testInvalidFileThrowsParameterException() {
+        File nonExistentFile = new File("nonExistent.csv");
+        SubcommandClassify cmd = new SubcommandClassify();
+        CommandLine cmdLine = new CommandLine(cmd);
+        int exitCode = cmdLine.execute("-d", nonExistentFile.getAbsolutePath());
+        assertThrows(CommandLine.ParameterException.class,
+                () -> cmd.setDataFile(nonExistentFile));
+        assertNotEquals(0, exitCode);
+    }
+
+    @Test
+    void testInvalidFileNonZeroExitCode() {
+        File nonExistentFile = new File("nonExistent.csv");
+        SubcommandClassify cmd = new SubcommandClassify();
+        CommandLine cmdLine = new CommandLine(cmd);
+        int exitCode = cmdLine.execute("-d", nonExistentFile.getAbsolutePath());
+        assertNotEquals(0, exitCode);
+    }
+
+
+
+
 }

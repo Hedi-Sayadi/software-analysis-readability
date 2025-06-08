@@ -26,4 +26,9 @@ public class HalsteadVolumeFeatureTest {
         assertEquals(0, volume, "Volume should be zero for empty code");
     }
 
+    @Test
+    void testGetIdentifier() {
+        assertEquals("HalsteadVolume", halsteadFeature.getIdentifier());
+    }
+
 }

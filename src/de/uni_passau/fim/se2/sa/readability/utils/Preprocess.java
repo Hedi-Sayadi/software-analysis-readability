@@ -100,7 +100,7 @@ public class Preprocess {
         return snippetFiles;
     }
 
-    private static String buildCSVRow(Path snippetFile, Map<String, Double> truthScores, List<FeatureMetric> featureMetrics) throws IOException {
+    public static String buildCSVRow(Path snippetFile, Map<String, Double> truthScores, List<FeatureMetric> featureMetrics) throws IOException {
         String fileName = snippetFile.getFileName().toString();
         String content = Files.readString(snippetFile);
 
@@ -109,7 +109,8 @@ public class Preprocess {
 
         for (FeatureMetric metric : featureMetrics) {
             double value = metric.computeMetric(content);
-            row.append(String.format( ",%.2f", value));
+            row.append(String.format(Locale.US,",%.2f", value));
+
         }
 
         String truthValue = "N";

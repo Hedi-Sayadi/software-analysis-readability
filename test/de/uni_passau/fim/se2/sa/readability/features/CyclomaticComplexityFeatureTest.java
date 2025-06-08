@@ -25,4 +25,17 @@ public class CyclomaticComplexityFeatureTest {
         assertEquals(1.0, complexityFeature.computeMetric(code), "Empty method should have complexity 1");
     }
 
+
+    @Test
+    void testInvalidCode() {
+        String code = "void invalid { ; invalid}";
+        assertEquals(0.0, complexityFeature.computeMetric(code));
+    }
+
+    @Test
+    void testGetIdentifier() {
+        assertEquals("CyclomaticComplexity", complexityFeature.getIdentifier());
+    }
+
+
 }
