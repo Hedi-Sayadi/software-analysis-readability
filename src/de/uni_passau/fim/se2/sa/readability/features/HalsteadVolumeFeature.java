@@ -53,17 +53,8 @@ public class HalsteadVolumeFeature extends FeatureMetric {
         // Calculate program length (N) and vocabulary (n)
         int programLength = totalOperators + totalOperands;    // N =    N1 + N2
         int vocabulary = uniqueOperators + uniqueOperands;     // n = n1 + n2
-        System.out.println("program lenght :" + programLength);
-        System.out.println("vocabulary : :" + vocabulary);
-        System.out.println("totalOperands" + totalOperands);
-        System.out.println("uniqueOperands" + uniqueOperands);
-        System.out.println("totalOperators" + totalOperators);
-        System.out.println("uniqueOperators" + uniqueOperators);
-
-
 
         double volume = programLength * (Math.log(vocabulary) / Math.log(2));
-        System.out.println("Calculated volume: " + volume);
 
         return volume;
 

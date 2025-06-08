@@ -40,8 +40,6 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
     public void visit(SimpleName n, Void arg) {
        System.out.println(n.asString());
         increment(n.asString());
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
         super.visit(n, arg);
     }
     @Override
@@ -97,62 +95,5 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
         increment("null");
         super.visit(n, arg);
     }
-
-
-//    @Override
-//    public void visit(MethodDeclaration n, Void arg) {
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//
-////println
-//    @Override
-//    public void visit(MethodCallExpr n, Void arg) {
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//    //variable names
-//    @Override
-//    public void visit(VariableDeclarator n, Void arg) {
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//
-//    @Override
-//    public void visit(ClassOrInterfaceType n, Void arg) {
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//
-//    // out
-//    @Override
-//    public void visit(FieldAccessExpr n, Void arg) {
-//        System.out.println(n.getNameAsString());
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//
-//    @Override
-//    public void visit(Parameter n, Void arg) {
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-//
-//    @Override
-//    public void visit(ExplicitConstructorInvocationStmt n, Void arg) {
-//        increment("this");
-//        super.visit(n, arg);
-//    }
-//
-//    @Override
-//    public void visit(NormalAnnotationExpr  n, Void arg) {
-//        increment(n.getNameAsString());
-//        super.visit(n, arg);
-//    }
-
 
 }
