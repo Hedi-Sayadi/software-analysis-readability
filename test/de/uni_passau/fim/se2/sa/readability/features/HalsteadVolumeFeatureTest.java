@@ -18,7 +18,7 @@ public class HalsteadVolumeFeatureTest {
         String code = Files.readString(Paths.get(filePath));
         assertTrue(halsteadFeature.computeMetric(code)>0);
     }
-    
+
     @Test
     void testEmptyCode() {
         String code = "";

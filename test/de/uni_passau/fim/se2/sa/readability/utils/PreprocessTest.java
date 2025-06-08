@@ -7,20 +7,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PreprocessTest {
-
+class PreprocessTest {
 
     @Test
-    public void getSnippetColumnNamesTest() {
+    public void testGetSnippetColumnNames() {
         String[] headers = {"Rater", "Snippet1", "Snippet2", "Snippet3", "Snippet200"};
         List<String> snippetNames = Preprocess.getSnippetColumnNames(headers);
         assertEquals(4, snippetNames.size());
@@ -31,7 +27,7 @@ public class PreprocessTest {
     }
 
     @Test
-    public void parseTruthFileTest() throws IOException {
+    public void testParseTruthFileTest() throws IOException {
         //help of llm :
         File tempTruthFile = File.createTempFile("truthTemp",".csv");
         try (PrintWriter writer = new PrintWriter(tempTruthFile)) {
@@ -49,7 +45,7 @@ public class PreprocessTest {
     }
 
     @Test
-    public void getSortedSnippetFilesTest() throws IOException {
+    public void testGetSortedSnippetFiles() throws IOException {
         Path tempDir = Files.createTempDirectory("Snippets-test");
         Files.createFile(tempDir.resolve("3.jsnp"));
         Files.createFile(tempDir.resolve("1.jsnp"));
@@ -80,9 +76,4 @@ public class PreprocessTest {
 
 
 
-
-
-    }
-
-
-
+}

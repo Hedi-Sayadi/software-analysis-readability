@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ParserTest {
-
+class ParserTest {
     @Test
-    void ParseJavaSnippetValidSnippetTest() {
+    void testParseJavaSnippetValidSnippet() {
         String validSnippet = "void foo() { int x = 0; }";
         try {
             BodyDeclaration<?> result = Parser.parseJavaSnippet(validSnippet);
@@ -20,12 +19,11 @@ public class ParserTest {
     }
 
     @Test
-    void ParseJavaSnippetInValidSnippetTest() {
+    void testParseJavaSnippetInValidSnippet() {
         String invalidSnippet = "void foo( { int x = 0 ";
         assertThrows(ParseException.class, () -> {
             Parser.parseJavaSnippet(invalidSnippet);
         });
     }
-
 
 }

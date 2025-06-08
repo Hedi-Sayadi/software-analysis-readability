@@ -4,10 +4,9 @@ import de.uni_passau.fim.se2.sa.readability.ReadabilityAnalysisMain;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SubcommandClassifyTest {
-
+class SubcommandClassifyTest {
     @Test
     public void testClassifyCommand() {
         CommandLine cmd = new CommandLine(new ReadabilityAnalysisMain());
