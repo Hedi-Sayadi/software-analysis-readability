@@ -10,11 +10,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HalsteadVolumeFeatureTest {
-    private HalsteadVolumeFeature halsteadFeature;
-    @BeforeEach
-    void setUp() {
-        halsteadFeature = new HalsteadVolumeFeature();
-    }
+    private HalsteadVolumeFeature halsteadFeature = new HalsteadVolumeFeature();
 
     @Test
     void testSimpleFile() throws IOException {
@@ -22,8 +18,7 @@ public class HalsteadVolumeFeatureTest {
         String code = Files.readString(Paths.get(filePath));
         assertTrue(halsteadFeature.computeMetric(code)>0);
     }
-
-
+    
     @Test
     void testEmptyCode() {
         String code = "";
