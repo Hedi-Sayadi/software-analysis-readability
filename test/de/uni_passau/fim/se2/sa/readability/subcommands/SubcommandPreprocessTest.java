@@ -123,6 +123,4 @@ class SubcommandPreprocessTest {
 
         assertEquals("Truth file does not exist.", exception.getMessage());
     }
-
-
 }
