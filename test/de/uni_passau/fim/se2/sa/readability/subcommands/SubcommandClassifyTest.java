@@ -9,12 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SubcommandClassifyTest {
-//    @Test
-//    public void testClassifyCommand() {
-//        CommandLine cmd = new CommandLine(new ReadabilityAnalysisMain());
-//        CommandLine.ParseResult result = cmd.parseArgs("classify","-d","resources/dataset.csv");
-//        assertEquals("classify", result.subcommand().commandSpec().name());
-//    }
 
     @Test
     void testInvalidFileThrowsParameterException() {

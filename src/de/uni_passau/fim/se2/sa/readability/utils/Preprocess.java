@@ -149,5 +149,12 @@ public class Preprocess {
         return snippetNames;
     }
 
+
+    //When i used mockito, the build failed in artemis, i switch to create manual values for testing.
+
+
+
+
+
 }
 

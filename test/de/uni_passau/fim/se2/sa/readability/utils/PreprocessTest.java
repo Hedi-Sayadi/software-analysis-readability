@@ -15,9 +15,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class PreprocessTest {
 
@@ -88,16 +85,11 @@ class PreprocessTest {
         Path testFile = tempDir.resolve("test.jsnp");
         Files.writeString(testFile, "public class Test {}");
 
-        FeatureMetric line = mock(FeatureMetric.class);
-        FeatureMetric entropy = mock(FeatureMetric.class);
-        FeatureMetric volume = mock(FeatureMetric.class);
-
-        when(line.computeMetric(anyString())).thenReturn(15.00);
-        when(entropy.computeMetric(anyString())).thenReturn(2.34);
-        when(volume.computeMetric(anyString())).thenReturn(100.59);
-
-        List<FeatureMetric> metrics = List.of(line, entropy,volume);
-
+        List<FeatureMetric> metrics = List.of(
+                new LineMetric(),
+                new EntropyMetric(),
+                new VolumeMetric()
+        );
         Map<String, Double> truthScores = Map.of("test.jsnp", 0.6);
 
         String result = Preprocess.buildCSVRow(testFile, truthScores, metrics);
@@ -114,15 +106,12 @@ class PreprocessTest {
         Path testFile = tempDir.resolve("test.jsnp");
         Files.writeString(testFile, "public class Test {}");
 
-        FeatureMetric line = mock(FeatureMetric.class);
-        FeatureMetric entropy = mock(FeatureMetric.class);
-        FeatureMetric volume = mock(FeatureMetric.class);
+        List<FeatureMetric> metrics = List.of(
+                new LineMetric(),
+                new EntropyMetric(),
+                new VolumeMetric()
+        );
 
-        when(line.computeMetric(anyString())).thenReturn(15.00);
-        when(entropy.computeMetric(anyString())).thenReturn(2.34);
-        when(volume.computeMetric(anyString())).thenReturn(100.59);
-
-        List<FeatureMetric> metrics = List.of(line, entropy,volume);
 
         Map<String, Double> truthScores = Map.of("test.jsnp", 3.7);
 
@@ -132,9 +121,6 @@ class PreprocessTest {
         assertEquals(expected, result);
     }
 
-
-
-
     @Test
     void buildCSVRowThrowsIOException() {
         Path nonExistentFile = Paths.get("nonexistent.csv");
@@ -142,4 +128,69 @@ class PreprocessTest {
                 Preprocess.buildCSVRow(nonExistentFile, Map.of(), List.of()));
     }
 
+    static class LineMetric extends FeatureMetric {
+        private final double value;
+
+        public LineMetric() {
+            this(15.00);
+        }
+
+        public LineMetric(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public double computeMetric(String codeSnippet) {
+            return value;
+        }
+
+        @Override
+        public String getIdentifier() {
+            return "LineMetric";
+        }
+    }
+
+    static class EntropyMetric extends FeatureMetric {
+        private final double value;
+
+        public EntropyMetric() {
+            this(2.34);
+        }
+
+        public EntropyMetric(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public double computeMetric(String codeSnippet) {
+            return value;
+        }
+
+        @Override
+        public String getIdentifier() {
+            return "EntropyMetric";
+        }
+    }
+
+    static class VolumeMetric extends FeatureMetric {
+        private final double value;
+
+        public VolumeMetric() {
+            this(100.59);
+        }
+
+        public VolumeMetric(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public double computeMetric(String codeSnippet) {
+            return value;
+        }
+
+        @Override
+        public String getIdentifier() {
+            return "VolumeMetric";
+        }
+    }
 }
