@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
@@ -7,7 +8,6 @@ import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.CatchClause;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
-import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashMap;
@@ -37,12 +37,13 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
     }
 
     @Override
-    public void visit(NameExpr n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
+    public void visit(SimpleName n, Void arg) {
+       System.out.println(n.asString());
+        increment(n.asString());
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
         super.visit(n, arg);
     }
-
     @Override
     public void visit(BooleanLiteralExpr n, Void arg) {
         System.out.println(n.getValue());
@@ -80,8 +81,13 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(StringLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
-        increment(n.getValue());
+        String val = n.getValue().toLowerCase();
+        // Normalize string literals "true", "false", "null" to unquoted and lowercase
+        if (val.equals("true") || val.equals("false") || val.equals("null")) {
+            increment(val);
+        } else {
+            increment(n.getValue()); // other string unchanged
+        }
         super.visit(n, arg);
     }
 
@@ -92,60 +98,61 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
         super.visit(n, arg);
     }
 
-    @Override
-    public void visit(MethodDeclaration n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
 
-//println
-    @Override
-    public void visit(MethodCallExpr n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
-    //variable names
-    @Override
-    public void visit(VariableDeclarator n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
+//    @Override
+//    public void visit(MethodDeclaration n, Void arg) {
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//
+////println
+//    @Override
+//    public void visit(MethodCallExpr n, Void arg) {
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//    //variable names
+//    @Override
+//    public void visit(VariableDeclarator n, Void arg) {
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//
+//    @Override
+//    public void visit(ClassOrInterfaceType n, Void arg) {
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//
+//    // out
+//    @Override
+//    public void visit(FieldAccessExpr n, Void arg) {
+//        System.out.println(n.getNameAsString());
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//
+//    @Override
+//    public void visit(Parameter n, Void arg) {
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
+//
+//    @Override
+//    public void visit(ExplicitConstructorInvocationStmt n, Void arg) {
+//        increment("this");
+//        super.visit(n, arg);
+//    }
+//
+//    @Override
+//    public void visit(NormalAnnotationExpr  n, Void arg) {
+//        increment(n.getNameAsString());
+//        super.visit(n, arg);
+//    }
 
-    @Override
-    public void visit(ClassOrInterfaceType n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
-
-    // out
-    @Override
-    public void visit(FieldAccessExpr n, Void arg) {
-        System.out.println(n.getNameAsString());
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
-
-//@ annotation
-    @Override
-    public void visit(Parameter n, Void arg) {
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
-
-    @Override
-    public void visit(ExplicitConstructorInvocationStmt n, Void arg) {
-        increment("this");
-        super.visit(n, arg);
-    }
-
-    @Override
-    public void visit(NormalAnnotationExpr  n, Void arg) {
-        increment(n.getNameAsString());
-        super.visit(n, arg);
-    }
 
 }

@@ -50,13 +50,6 @@ public class OperatorVisitor extends VoidVisitorAdapter<Void> {
         operatorsPerMethod.put(type, operatorsPerMethod.get(type) + 1);
         super.visit(n, arg);
     }
-
-    @Override
-    public void visit(VariableDeclarationExpr n, Void arg) {
-        OperatorType type = OperatorType.ASSIGNMENT;
-        operatorsPerMethod.put(type, operatorsPerMethod.get(type) + 1);
-        super.visit(n, arg);
-    }
     @Override
     public void visit(UnaryExpr n, Void arg) {
         OperatorType type = OperatorType.UNARY;
@@ -73,6 +66,12 @@ public class OperatorVisitor extends VoidVisitorAdapter<Void> {
     @Override
     public void visit(InstanceOfExpr n, Void arg) {
         OperatorType type = OperatorType.TYPE_COMPARISON;
+        operatorsPerMethod.put(type, operatorsPerMethod.get(type) + 1);
+        super.visit(n, arg);
+    }
+    @Override
+    public void visit(VariableDeclarationExpr n, Void arg) {
+        OperatorType type = OperatorType.ASSIGNMENT;
         operatorsPerMethod.put(type, operatorsPerMethod.get(type) + 1);
         super.visit(n, arg);
     }
