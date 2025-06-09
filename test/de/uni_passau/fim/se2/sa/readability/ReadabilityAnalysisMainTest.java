@@ -23,9 +23,4 @@ class ReadabilityAnalysisMainTest {
         System.setOut(originalOut);
 
     }
-
-
-
-
-
 }
