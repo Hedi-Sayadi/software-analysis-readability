@@ -89,6 +89,21 @@ public class HalsteadVolumeFeatureTest {
         assertTrue(bigVolume > smallVolume);
     }
 
+    @Test
+    public void testHalsteadVolumeWithKnownInput() {
+        HalsteadVolumeFeature feature = new HalsteadVolumeFeature();
+
+        String code = """
+     {
+        int a = b + c;
+    }
+    """;
+        double result = feature.computeMetric(code);
+        double expectedVolume = 11.61; //Calculated manually: 5 * log2(5)
+
+        assertEquals(expectedVolume, result, 0.01); //I added the 0.01 to check the two numbers are close enough : i asked an llm about this
+    }
+
 
 
 
