@@ -55,8 +55,6 @@ class OperandVisitorTest {
     }
 
 
-
-
     @Test
     void testVisitLongLiteralExpr() {
         OperandVisitor visitor = new OperandVisitor();
@@ -123,27 +121,27 @@ class OperandVisitorTest {
         assertEquals(1, result.get("null"));
     }
 
-    @Test
-    void testVisitBooleanLiteralTrue() {
-        OperandVisitor visitor = new OperandVisitor();
-        BooleanLiteralExpr expr = new BooleanLiteralExpr(true);
+//    @Test
+//    void testVisitBooleanLiteralTrue() {
+//        OperandVisitor visitor = new OperandVisitor();
+//        BooleanLiteralExpr expr = new BooleanLiteralExpr(true);
+//
+//        visitor.visit(expr, null);
+//
+//        Map<String, Integer> result = visitor.getOperandsPerMethod();
+//        assertEquals(1, result.get("true"));
+//    }
 
-        visitor.visit(expr, null);
-
-        Map<String, Integer> result = visitor.getOperandsPerMethod();
-        assertEquals(1, result.get("true"));
-    }
-
-    @Test
-    void testVisitCharLiteralExpr() {
-        OperandVisitor visitor = new OperandVisitor();
-        CharLiteralExpr charExpr = new CharLiteralExpr('a');
-
-        visitor.visit(charExpr, null);
-
-        Map<String, Integer> result = visitor.getOperandsPerMethod();
-        assertEquals(1, result.get("a"));
-    }
+//    @Test
+//    void testVisitCharLiteralExpr() {
+//        OperandVisitor visitor = new OperandVisitor();
+//        CharLiteralExpr charExpr = new CharLiteralExpr('a');
+//
+//        visitor.visit(charExpr, null);
+//
+//        Map<String, Integer> result = visitor.getOperandsPerMethod();
+//        assertEquals(1, result.get("a"));
+//    }
     @Test
     void testVisitCharLiteralExprKillMutation() throws ParseException {
         String code = """

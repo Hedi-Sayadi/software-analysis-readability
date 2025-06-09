@@ -1,13 +1,6 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
-import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
-import com.github.javaparser.ast.stmt.CatchClause;
-import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashMap;
@@ -38,41 +31,35 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(SimpleName n, Void arg) {
-       System.out.println(n.asString());
         increment(n.asString());
         super.visit(n, arg);
     }
     @Override
     public void visit(BooleanLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
         increment(String.valueOf(n.getValue()));
         super.visit(n, arg);
     }
 
     @Override
     public void visit(CharLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
         increment(n.getValue());
         super.visit(n, arg);
     }
 
     @Override
     public void visit(DoubleLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
         increment(n.getValue());
         super.visit(n, arg);
     }
 
     @Override
     public void visit(IntegerLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
         increment(n.getValue());
         super.visit(n, arg);
     }
 
     @Override
     public void visit(LongLiteralExpr n, Void arg) {
-        System.out.println(n.getValue());
         increment(n.getValue());
         super.visit(n, arg);
     }
@@ -91,7 +78,6 @@ public class OperandVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(NullLiteralExpr n, Void arg) {
-        System.out.println("null");
         increment("null");
         super.visit(n, arg);
     }
