@@ -1,5 +1,7 @@
 package de.uni_passau.fim.se2.sa.readability.utils;
 
+import com.github.javaparser.ParseException;
+import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.expr.*;
 import org.junit.jupiter.api.Test;
 
@@ -9,16 +11,49 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OperandVisitorTest {
+
     @Test
-    void testVisitDoubleLiteralExpr() {
-        OperandVisitor visitor = new OperandVisitor();
-        DoubleLiteralExpr doubleExpr = new DoubleLiteralExpr("3.14");
-
-        visitor.visit(doubleExpr, null);
-
-        assertTrue(visitor.getOperandsPerMethod().containsKey("3.14"));
-        assertEquals(1, visitor.getOperandsPerMethod().get("3.14"));
+    void testVisitDoubleLiteralExpr () throws ParseException {
+        String code = """
+    class TestClass {
+        void method() {
+            double d = 3.14;
+            double e = 1.23;
+        }
     }
+    """;
+
+        BodyDeclaration<?> parsedCode = Parser.parseJavaSnippet(code);
+        OperandVisitor visitor = new OperandVisitor();
+        parsedCode.accept(visitor, null);
+
+        Map<String, Integer> operands = visitor.getOperandsPerMethod();
+        assertEquals(1, operands.get("3.14"));
+        assertEquals(1, operands.get("1.23"));
+    }
+
+
+
+    @Test
+    void testVisitBooleanLiteralExpr() throws ParseException {
+        String code = """
+    class TestClass {
+        void method() {
+            boolean flag = true;
+            boolean noFlag = false;
+        }
+    }
+    """;
+
+        BodyDeclaration<?> parsedCode = Parser.parseJavaSnippet(code);
+        OperandVisitor visitor = new OperandVisitor();
+        parsedCode.accept(visitor, null);
+
+        Map<String, Integer> operands = visitor.getOperandsPerMethod();
+        assertEquals(1, operands.get("true"));
+        assertEquals(1, operands.get("false"));
+    }
+
 
     @Test
     void testVisitLongLiteralExpr() {
@@ -87,26 +122,26 @@ class OperandVisitorTest {
     }
 
     @Test
-    void testVisitBooleanLiteralTrue() {
+    void testVisitCharLiteralExpr() throws ParseException {
+        String code = """
+        class TestClass {
+            void method() {
+                char c1 = 'x';
+                char c2 = 'y';
+            }
+        }
+        """;
+
+        BodyDeclaration<?> parsedCode = Parser.parseJavaSnippet(code);
         OperandVisitor visitor = new OperandVisitor();
-        BooleanLiteralExpr expr = new BooleanLiteralExpr(true);
+        parsedCode.accept(visitor, null);
 
-        visitor.visit(expr, null);
-
-        Map<String, Integer> result = visitor.getOperandsPerMethod();
-        assertEquals(1, result.get("true"));
+        Map<String, Integer> operands = visitor.getOperandsPerMethod();
+        assertEquals(1, operands.get("x"));
+        assertEquals(1, operands.get("y"));
     }
 
-    @Test
-    void testVisitCharLiteralExpr() {
-        OperandVisitor visitor = new OperandVisitor();
-        CharLiteralExpr charExpr = new CharLiteralExpr('a');
-
-        visitor.visit(charExpr, null);
-
-        Map<String, Integer> result = visitor.getOperandsPerMethod();
-        assertEquals(1, result.get("a"));
-    }
+// add this comment just to see why i have Everything up-to-date when i push
 
 
 
