@@ -66,7 +66,6 @@ public class CyclomaticComplexityVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(BinaryExpr n, Void arg) {
-        // Short-circuit logic counts as additional paths
         if (n.getOperator() == BinaryExpr.Operator.AND || n.getOperator() == BinaryExpr.Operator.OR) {
             complexity++;
         }
