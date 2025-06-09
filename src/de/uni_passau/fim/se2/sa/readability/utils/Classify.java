@@ -20,7 +20,7 @@ public class Classify {
      * @throws IOException if the CSV file specified via the cli could not be loaded.
      */
     public static Instances loadDataset(File data) throws IOException {
-        //Help of llm : Please refer to .keep in LLM folder
+        //Help from llm : Please refer to .keep in LLM folder
         CSVLoader loader = new CSVLoader();
         loader.setSource(data);
         Instances dataset = loader.getDataSet();
@@ -41,9 +41,8 @@ public class Classify {
         Classifier logistic = new Logistic();
         Evaluation eval = new Evaluation(dataset);
 
-         //Help of llm : Please refer to .keep in LLM folder
-        // Perform 10-fold cross-validation with seed = 1
-        eval.crossValidateModel(logistic, dataset, 10, new Random(1));
+         //Help from llm : Please refer to .keep in LLM folder
+         eval.crossValidateModel(logistic, dataset, 10, new Random(1));
 
         return eval;
     }

@@ -2,10 +2,6 @@ package de.uni_passau.fim.se2.sa.readability.features;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,9 +9,23 @@ public class HalsteadVolumeFeatureTest {
     private HalsteadVolumeFeature halsteadFeature = new HalsteadVolumeFeature();
 
     @Test
-    void testSimpleFile() throws IOException {
-        String filePath = "resources/Simple.jsnp";
-        String code = Files.readString(Paths.get(filePath));
+    void testSimpleFile() {
+        String code = """
+        public void testMethod(){
+            int x = 10;
+            int y = 20;
+            int z = x + y;
+            x = x + y;
+            y = x > 10 ? 10 : 20;
+
+            List<Integer> list;
+            if (list instanceof ArrayList) {
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(i);
+                }
+            }
+        }
+        """;
         assertTrue(halsteadFeature.computeMetric(code)>0);
     }
 
@@ -32,10 +42,10 @@ public class HalsteadVolumeFeatureTest {
         assertEquals("HalsteadVolume", halsteadFeature.getIdentifier());
     }
 
-    //I added the tests below to improve the mutation after seeing the report of mutation :
+    //I added the tests below to improve the mutation coverage after seeing the report: mutation.xml :
 
     @Test
-    void testMathematicalFormulaCorrectness() {
+    void testSmallandBigCode() {
         String smallCode = """
             public class Test {
                 int x = 1;
@@ -55,7 +65,7 @@ public class HalsteadVolumeFeatureTest {
 
         double smallVolume = halsteadFeature.computeMetric(smallCode);
         double bigVolume = halsteadFeature.computeMetric(bigCode);
-        assertTrue(bigVolume >smallVolume );
+        assertTrue(bigVolume > smallVolume );
         assertTrue(smallVolume > 0 && bigVolume < 100);
         assertTrue(bigVolume > 20 && bigVolume < 500);
     }
@@ -70,7 +80,7 @@ public class HalsteadVolumeFeatureTest {
             }
             """;
 
-        String multipleMethodsCode = """
+        String multiMethodsCode = """
             public class Calculator {
                 public int add(int a, int b) {
                     return a + b;
@@ -84,7 +94,7 @@ public class HalsteadVolumeFeatureTest {
             """;
 
         double smallVolume = halsteadFeature.computeMetric(singleMethodCode);
-        double bigVolume = halsteadFeature.computeMetric(multipleMethodsCode);
+        double bigVolume = halsteadFeature.computeMetric(multiMethodsCode);
 
         assertTrue(bigVolume > smallVolume);
     }
@@ -103,8 +113,5 @@ public class HalsteadVolumeFeatureTest {
 
         assertEquals(expectedVolume, result, 0.01); //I added the 0.01 to check the two numbers are close enough : i asked an llm about this
     }
-
-
-
 
 }

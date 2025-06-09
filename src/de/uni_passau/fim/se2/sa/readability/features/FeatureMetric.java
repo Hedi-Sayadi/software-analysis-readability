@@ -1,8 +1,5 @@
 package de.uni_passau.fim.se2.sa.readability.features;
 
-import com.github.javaparser.*;
-import com.github.javaparser.ast.body.BodyDeclaration;
-
 public abstract class FeatureMetric {
 
     /**

@@ -71,7 +71,6 @@ class SubcommandPreprocessTest {
         File invalidDir = new File("invalidPath");
         Exception e = assertThrows(CommandLine.ParameterException.class,
                 () -> cmd.setSourceDirectory(invalidDir));
-        System.out.println(e.getMessage());
         assertTrue(e.getMessage().contains("Source directory does not exist."));
     }
 

@@ -84,14 +84,14 @@ public class Preprocess {
 
     public static List<Path> getSortedSnippetFiles(Path sourceDir) throws IOException {
         List<Path> snippetFiles = new ArrayList<>();
-        //help of llm
+        //help from llm
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceDir, "*.jsnp")) {
             for (Path file : stream) {
                 snippetFiles.add(file);
             }
         }
 
-        //help of llm
+        //help from llm
         snippetFiles.sort(Comparator.comparingInt(path -> {
             String name = path.getFileName().toString();
             return Integer.parseInt(name.substring(0, name.lastIndexOf(".jsnp")));
@@ -109,6 +109,7 @@ public class Preprocess {
 
         for (FeatureMetric metric : featureMetrics) {
             double value = metric.computeMetric(content);
+            // help from llm: how to set "." instead of ","
             row.append(String.format(Locale.US,",%.2f", value));
 
         }
@@ -148,13 +149,6 @@ public class Preprocess {
         }
         return snippetNames;
     }
-
-
-    //When i used mockito, the build failed in artemis, i switch to create manual values for testing.
-
-
-
-
 
 }
 

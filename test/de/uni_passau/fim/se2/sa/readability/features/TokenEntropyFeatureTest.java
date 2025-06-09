@@ -2,9 +2,6 @@ package de.uni_passau.fim.se2.sa.readability.features;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,9 +18,24 @@ public class TokenEntropyFeatureTest {
     }
 
     @Test
-    void testSimpleFile() throws IOException {
-        String filePath = "resources/Simple.jsnp";
-        String code = Files.readString(Paths.get(filePath));
+    void testSimpleFile() {
+        String code = """
+        public void testMethod(){
+            int x = 10;
+            int y = 20;
+            int z = x + y;
+            x = x + y;
+            y = x > 10 ? 10 : 20;
+
+            List<Integer> list;
+            if (list instanceof ArrayList) {
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(i);
+                }
+            }
+            
+        }
+        """;
         double result = entropyFeature.computeMetric(code);
         assertTrue(result > 0, "Entropy should be greater than 0");
     }

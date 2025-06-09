@@ -13,6 +13,7 @@ public class NumberLinesFeature extends FeatureMetric {
         if (codeSnippet.length()==0 || codeSnippet == null ){
             return 0;
         }
+        // ask llm about \n for different OSes
         return codeSnippet.split("\r\n|\r|\n").length;
             }
 

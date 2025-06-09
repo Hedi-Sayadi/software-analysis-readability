@@ -35,7 +35,7 @@ class OperatorVisitorTest {
         assertEquals(1, operatorCounts.get(OperatorVisitor.OperatorType.UNARY));
     }
 
-//to kill the mutation shown in mutation report
+//to kill the mutation shown in the report
     @Test
     public void testNestedBinaryExpressions() throws Exception {
         String snippet = """
@@ -52,7 +52,6 @@ class OperatorVisitorTest {
         Map<OperatorVisitor.OperatorType, Integer> operatorCounts = visitor.getOperatorsPerMethod();
         assertEquals(9, operatorCounts.get(OperatorVisitor.OperatorType.BINARY));
     }
-
 
     @Test
     public void testOnlyPositiveCountsExist() throws Exception {
@@ -77,8 +76,6 @@ class OperatorVisitorTest {
             assertTrue(entry.getValue() > 0, "Operator with zero count should not be included: " + entry.getKey());
         }
     }
-
-
 
 
 }

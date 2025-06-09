@@ -6,7 +6,7 @@ import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class CyclomaticComplexityVisitor extends VoidVisitorAdapter<Void> {
-    //Help of llm : Please refer to .keep in LLM folder
+    //Help from llm : Please refer to .keep in LLM folder
     private int complexity= 1;
 
     public int getComplexity() {
