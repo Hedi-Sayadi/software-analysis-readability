@@ -12,7 +12,7 @@ class CyclomaticComplexityVisitorTest {
     public void testSwitchEntryVisitorLabeledAndNonLabeledCases() throws ParseException {
         String code = """
             class Test {
-                void method() {
+                void testMethod() {
                     switch (1) {
                         case 1 -> System.out.println("One");
                         case 2 -> System.out.println("Two");
@@ -32,8 +32,8 @@ class CyclomaticComplexityVisitorTest {
     @Test
     public void testBinaryExp() throws ParseException {
         String code = """
-            public class Test {
-                public void testBinary(int x, int y) {
+            public class testBinaryExp {
+                public void testMethod(int x, int y) {
                     if (x > 0 && y > 0 || x == y) {
                         System.out.println("Hedi");
                     }
@@ -50,8 +50,8 @@ class CyclomaticComplexityVisitorTest {
     @Test
     public void testWhileAndDoWhile() throws ParseException {
         String code = """
-            public class Test {
-                void example() {
+            public class testWhileAndDoWhile {
+                void testMethod() {
                     while (true) {
                         // code
                     }
@@ -71,5 +71,49 @@ class CyclomaticComplexityVisitorTest {
         assertEquals(3, visitor.getComplexity());
     }
 
+
+    @Test
+    public void testCatchClause() throws ParseException {
+        String code = """
+            public class testCatchClause {
+                void testMethod() {
+                    try {
+                        int x = 1 / 0;
+                    } catch (ArithmeticException e) {
+                        System.out.println("ArithmeticException");
+                    }
+                }
+            }
+            """;
+
+        BodyDeclaration<?> parsedCode = Parser.parseJavaSnippet(code);
+
+        CyclomaticComplexityVisitor visitor = new CyclomaticComplexityVisitor();
+        parsedCode.accept(visitor, null);
+        System.out.println(visitor.getComplexity());
+
+        assertEquals(2, visitor.getComplexity());
+    }
+
+    @Test
+    public void testForEachStmt() throws ParseException {
+        String code = """
+            public class Test {
+                void example() {
+                    for (String s : new String[]{"a", "b", "c"}) {
+                        System.out.println(s);
+                    }
+                }
+            }
+            """;
+
+        BodyDeclaration<?> parsedCode = Parser.parseJavaSnippet(code);
+
+        CyclomaticComplexityVisitor visitor = new CyclomaticComplexityVisitor();
+        parsedCode.accept(visitor, null);
+        System.out.println(visitor.getComplexity());
+
+        assertEquals(2, visitor.getComplexity());
+    }
 
 }

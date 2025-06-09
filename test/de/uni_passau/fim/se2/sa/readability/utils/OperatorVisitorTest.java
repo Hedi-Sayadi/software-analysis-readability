@@ -21,7 +21,6 @@ class OperatorVisitorTest {
                 }
             }
             """;
-
         BodyDeclaration<?> parsedSnippet = Parser.parseJavaSnippet(snippet);
         OperatorVisitor visitor = new OperatorVisitor();
         parsedSnippet.accept(visitor, null);
@@ -34,5 +33,6 @@ class OperatorVisitorTest {
         assertEquals(1, operatorCounts.get(OperatorVisitor.OperatorType.TYPE_COMPARISON)); // instanceof
         assertEquals(1, operatorCounts.get(OperatorVisitor.OperatorType.UNARY));           // a++
     }
+
     }
 
