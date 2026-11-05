@@ -1,11 +1,8 @@
 # Readability Analysis
 
-This repository contains a Java project for analysing the readability of
-Java code snippets. It extracts a small set of code metrics and uses the
-resulting data to classify snippets according to their readability.
-
-The project was developed as part of the Software Analysis course at the
-University of Passau.
+This project analyses the readability of Java code snippets. It measures
+each snippet using several code metrics and uses those measurements to
+classify the snippets by readability.
 
 ## What it does
 
@@ -77,6 +74,3 @@ test/         Unit tests
 resources/    Example snippets and readability scores
 pom.xml       Maven build configuration
 ```
-
-Generated files such as `target/` and local IDE files are intentionally
-excluded from version control.
